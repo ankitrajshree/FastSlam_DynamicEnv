@@ -19,3 +19,4 @@ def multi_normal(x, mean, cov):
     num = np.exp(-0.5*np.transpose((x - mean)).dot(linalg.inv(cov)).dot(x - mean))
     result = num/den
     return result[0][0]
+

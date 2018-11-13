@@ -9,6 +9,7 @@ import random
 import math
 from copy import deepcopy
 from world import World
+from world import WINDOWHEIGHT, WINDOWWIDTH
 from particle import Particle
 import slam_helper
 import matplotlib.pyplot as plt
@@ -23,12 +24,14 @@ class FastSlam(object):
         self.c = 0
         self.error = []
         self.lm_error = []
+
     def run_simulation(self):
         while True:
             for event in self.world.pygame.event.get():
                 self.world.test_end(event)
             self.world.clear()
             key_pressed = self.world.pygame.key.get_pressed()
+
             if self.world.move_forward(key_pressed):
                 self.c += 1
                 if self.c < 50:
@@ -105,6 +108,13 @@ class FastSlam(object):
 
     def get_predicted_landmarks(self):
         return self.particles[0].landmarks
+
+    def check_envr_bounds(self, x, y):
+        out_flag = False
+        if x <= WINDOWWIDTH and y <= WINDOWHEIGHT:
+            out_flag = True
+        return out_flag
+
 
 if __name__=="__main__":
     loc_err_part = []
